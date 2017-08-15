@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    ExpressionCalculator calculator;
+    ExpressionCalculator calculator = new ExpressionCalculator();
 
     TextView answer;
 
@@ -55,9 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        calculator = new ExpressionCalculator();
+        setContentView(R.layout.calculate);
 
         answer = (TextView) findViewById(R.id.answer);
 
