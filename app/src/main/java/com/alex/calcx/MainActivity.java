@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     ExpressionCalculator calculator = new ExpressionCalculator();
 
+    TextView expression;
     TextView answer;
 
     Button zero;
@@ -49,14 +50,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     Button closeBr;
     Button clear;
     Button backspace;
-    Button solve;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calculate);
+        setContentView(R.layout.activity_calc);
 
+        expression = (TextView) findViewById(R.id.expression);
         answer = (TextView) findViewById(R.id.answer);
 
         zero = (Button) findViewById(R.id.digit0);
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         closeBr = (Button) findViewById(R.id.closeBr);
         clear = (Button) findViewById(R.id.clear);
         backspace = (Button) findViewById(R.id.backspace);
-        solve = (Button) findViewById(R.id.solve);
 
         zero.setOnClickListener(this);
         one.setOnClickListener(this);
@@ -133,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         closeBr.setOnClickListener(this);
         clear.setOnClickListener(this);
         backspace.setOnClickListener(this);
-        solve.setOnClickListener(this);
     }
 
     @Override
@@ -141,116 +139,116 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         switch (view.getId()) {
             case R.id.digit0:
-                answer.append("0");
+                expression.append("0");
                 break;
             case R.id.digit1:
-                answer.append("1");
+                expression.append("1");
                 break;
             case R.id.digit2:
-                answer.append("2");
+                expression.append("2");
                 break;
             case R.id.digit3:
-                answer.append("3");
+                expression.append("3");
                 break;
             case R.id.digit4:
-                answer.append("4");
+                expression.append("4");
                 break;
             case R.id.digit5:
-                answer.append("5");
+                expression.append("5");
                 break;
             case R.id.digit6:
-                answer.append("6");
+                expression.append("6");
                 break;
             case R.id.digit7:
-                answer.append("7");
+                expression.append("7");
                 break;
             case R.id.digit8:
-                answer.append("8");
+                expression.append("8");
                 break;
             case R.id.digit9:
-                answer.append("9");
+                expression.append("9");
                 break;
             case R.id.dot:
-                answer.append(".");
+                expression.append(".");
                 break;
             case R.id.plus:
-                answer.append("+");
+                expression.append("+");
                 break;
             case R.id.minus:
-                answer.append("-");
+                expression.append("-");
                 break;
             case R.id.multiple:
-                answer.append("*");
+                expression.append("*");
                 break;
             case R.id.divide:
-                answer.append("/");
+                expression.append("/");
                 break;
             case R.id.mod:
-                answer.append("%");
+                expression.append("%");
                 break;
             case R.id.sin:
-                answer.append("sin");
+                expression.append("sin");
                 break;
             case R.id.cos:
-                answer.append("cos");
+                expression.append("cos");
                 break;
             case R.id.tan:
-                answer.append("tan");
+                expression.append("tan");
                 break;
             case R.id.cot:
-                answer.append("cot");
+                expression.append("cot");
                 break;
             case R.id.ln:
-                answer.append("ln");
+                expression.append("ln");
                 break;
             case R.id.lg:
-                answer.append("lg");
+                expression.append("lg");
                 break;
             case R.id.log:
-                answer.append("log");
+                expression.append("log");
                 break;
             case R.id.exp:
-                answer.append("exp");
+                expression.append("exp");
                 break;
             case R.id.abs:
-                answer.append("abs");
+                expression.append("abs");
                 break;
             case R.id.factorial:
-                answer.append("!");
+                expression.append("!");
                 break;
             case R.id.power:
-                answer.append("^");
+                expression.append("^");
                 break;
             case R.id.sqrt:
-                answer.append("sqrt");
+                expression.append("sqrt");
                 break;
             case R.id.cbrt:
-                answer.append("cbrt");
+                expression.append("cbrt");
                 break;
             case R.id.root:
-                answer.append("root");
+                expression.append("root");
                 break;
             case R.id.e:
-                answer.append("e");
+                expression.append("e");
                 break;
             case R.id.pi:
-                answer.append("pi");
+                expression.append("pi");
                 break;
             case R.id.openBr:
-                answer.append("(");
+                expression.append("(");
                 break;
             case R.id.closeBr:
-                answer.append(")");
+                expression.append(")");
                 break;
             case R.id.clear:
-                answer.setText("");
+                expression.setText("");
                 break;
             case R.id.backspace:
-                if (answer.getText().length() > 0) answer.setText(answer.getText().subSequence(0, answer.getText().length()-1));
-                break;
-            case R.id.solve:
-                answer.append("\n = " + calculator.calculate(answer.getText().toString()) + "\n");
+                if (expression.getText().length() > 0)
+                    expression.setText(expression.getText().subSequence(0, expression.getText().length()-1));
                 break;
         }
+        answer.setText(expression.getText().length() > 0 ?
+                " = " + calculator.calculate(expression.getText().toString()) : "");
     }
 }
