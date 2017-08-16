@@ -53,8 +53,10 @@ public class ExpressionCalculator {
         for (String bracket : brackets) {
             expression = expression.replace(bracket, " " + bracket + " ");
         }
+
         List<String> tokens = new ArrayList<>();
         Collections.addAll(tokens, expression.split("[ ]+"));
+
         return tokens;
     }
 

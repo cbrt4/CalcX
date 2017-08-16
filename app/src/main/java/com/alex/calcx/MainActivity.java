@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    ExpressionCalculator calculator = new ExpressionCalculator();
+    ExpressionCalculator calculator;
+    StringBuilder expressionBuilder;
 
     TextView expression;
     TextView answer;
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc);
+
+        calculator = new ExpressionCalculator();
+        expressionBuilder = new StringBuilder().append("");
 
         expression = (TextView) findViewById(R.id.expression);
         answer = (TextView) findViewById(R.id.answer);
@@ -139,115 +143,116 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         switch (view.getId()) {
             case R.id.digit0:
-                expression.append("0");
+                expressionBuilder.append("0");
                 break;
             case R.id.digit1:
-                expression.append("1");
+                expressionBuilder.append("1");
                 break;
             case R.id.digit2:
-                expression.append("2");
+                expressionBuilder.append("2");
                 break;
             case R.id.digit3:
-                expression.append("3");
+                expressionBuilder.append("3");
                 break;
             case R.id.digit4:
-                expression.append("4");
+                expressionBuilder.append("4");
                 break;
             case R.id.digit5:
-                expression.append("5");
+                expressionBuilder.append("5");
                 break;
             case R.id.digit6:
-                expression.append("6");
+                expressionBuilder.append("6");
                 break;
             case R.id.digit7:
-                expression.append("7");
+                expressionBuilder.append("7");
                 break;
             case R.id.digit8:
-                expression.append("8");
+                expressionBuilder.append("8");
                 break;
             case R.id.digit9:
-                expression.append("9");
+                expressionBuilder.append("9");
                 break;
             case R.id.dot:
-                expression.append(".");
+                expressionBuilder.append(".");
                 break;
             case R.id.plus:
-                expression.append("+");
+                expressionBuilder.append("+");
                 break;
             case R.id.minus:
-                expression.append("-");
+                expressionBuilder.append("-");
                 break;
             case R.id.multiple:
-                expression.append("*");
+                expressionBuilder.append("*");
                 break;
             case R.id.divide:
-                expression.append("/");
+                expressionBuilder.append("/");
                 break;
             case R.id.mod:
-                expression.append("%");
+                expressionBuilder.append("%");
                 break;
             case R.id.sin:
-                expression.append("sin");
+                expressionBuilder.append("sin");
                 break;
             case R.id.cos:
-                expression.append("cos");
+                expressionBuilder.append("cos");
                 break;
             case R.id.tan:
-                expression.append("tan");
+                expressionBuilder.append("tan");
                 break;
             case R.id.cot:
-                expression.append("cot");
+                expressionBuilder.append("cot");
                 break;
             case R.id.ln:
-                expression.append("ln");
+                expressionBuilder.append("ln");
                 break;
             case R.id.lg:
-                expression.append("lg");
+                expressionBuilder.append("lg");
                 break;
             case R.id.log:
-                expression.append("log");
+                expressionBuilder.append("log");
                 break;
             case R.id.exp:
-                expression.append("exp");
+                expressionBuilder.append("exp");
                 break;
             case R.id.abs:
-                expression.append("abs");
+                expressionBuilder.append("abs");
                 break;
             case R.id.factorial:
-                expression.append("!");
+                expressionBuilder.append("!");
                 break;
             case R.id.power:
-                expression.append("^");
+                expressionBuilder.append("^");
                 break;
             case R.id.sqrt:
-                expression.append("sqrt");
+                expressionBuilder.append("sqrt");
                 break;
             case R.id.cbrt:
-                expression.append("cbrt");
+                expressionBuilder.append("cbrt");
                 break;
             case R.id.root:
-                expression.append("root");
+                expressionBuilder.append("root");
                 break;
             case R.id.e:
-                expression.append("e");
+                expressionBuilder.append("e");
                 break;
             case R.id.pi:
-                expression.append("pi");
+                expressionBuilder.append("pi");
                 break;
             case R.id.openBr:
-                expression.append("(");
+                expressionBuilder.append("(");
                 break;
             case R.id.closeBr:
-                expression.append(")");
+                expressionBuilder.append(")");
                 break;
             case R.id.clear:
-                expression.setText("");
+                expressionBuilder = new StringBuilder().append("");
                 break;
             case R.id.backspace:
-                if (expression.getText().length() > 0)
-                    expression.setText(expression.getText().subSequence(0, expression.getText().length()-1));
+                if (expressionBuilder.length() > 0)
+                    expressionBuilder.deleteCharAt(expressionBuilder.length()-1);
                 break;
         }
+        expression.setText(expressionBuilder);
         answer.setText(expression.getText().length() > 0 ?
                 " = " + calculator.calculate(expression.getText().toString()) : "");
     }
