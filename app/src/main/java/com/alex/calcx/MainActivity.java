@@ -1,5 +1,7 @@
 package com.alex.calcx;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,13 +11,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    ExpressionCalculator calculator;
-    StringBuilder expressionBuilder;
-
-    TextView expression;
-    TextView answer;
-
-    Button zero, one, two, three, four, five, six, seven, eight, nine, dot, plus, minus, multiple, divide, mod, sin, cos, tan, cot, ln, lg, log, exp, abs, factorial, power, sqrt, cbrt, root, e, pi, openBr, closeBr, clear, backspace;
+    private final static String EXPRESSION = "expression";
+    private ExpressionCalculator calculator;
+    private StringBuilder expressionBuilder;
+    private SharedPreferences sharedPrefs;
+    private TextView expression;
+    private TextView answer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +27,34 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-
-        // Save the user's current game state
-        savedInstanceState.putString("expression", expressionBuilder.toString());
+    public void onStart() {
+        super.onStart();
+        loadExpression();
+        expression.setText(expressionBuilder);
+        answer.setText(expression.getText().length() > 0 ?
+                " = " + calculator.calculate(expression.getText().toString()) : "");
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onStop() {
+        super.onStop();
+        saveExpression();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+        // Save the user's current game state
+        savedInstanceState.putString(EXPRESSION, expressionBuilder.toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
-
         // Restore state members from saved instance
-        expressionBuilder = new StringBuilder().append(savedInstanceState.getString("expression"));
+        expressionBuilder = new StringBuilder().append(savedInstanceState.getString(EXPRESSION));
         expression.setText(expressionBuilder);
         answer.setText(expression.getText().length() > 0 ?
                 " = " + calculator.calculate(expression.getText().toString()) : "");
@@ -168,46 +182,45 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private void init() {
         calculator = new ExpressionCalculator();
         expressionBuilder = new StringBuilder().append("");
-
         expression = (TextView) findViewById(R.id.expression);
         answer = (TextView) findViewById(R.id.answer);
 
-        zero = (Button) findViewById(R.id.digit0);
-        one = (Button) findViewById(R.id.digit1);
-        two = (Button) findViewById(R.id.digit2);
-        three = (Button) findViewById(R.id.digit3);
-        four = (Button) findViewById(R.id.digit4);
-        five = (Button) findViewById(R.id.digit5);
-        six = (Button) findViewById(R.id.digit6);
-        seven = (Button) findViewById(R.id.digit7);
-        eight = (Button) findViewById(R.id.digit8);
-        nine = (Button) findViewById(R.id.digit9);
-        dot = (Button) findViewById(R.id.dot);
-        plus = (Button) findViewById(R.id.plus);
-        minus = (Button) findViewById(R.id.minus);
-        multiple = (Button) findViewById(R.id.multiple);
-        divide = (Button) findViewById(R.id.divide);
-        mod = (Button) findViewById(R.id.mod);
-        sin = (Button) findViewById(R.id.sin);
-        cos = (Button) findViewById(R.id.cos);
-        tan = (Button) findViewById(R.id.tan);
-        cot = (Button) findViewById(R.id.cot);
-        ln = (Button) findViewById(R.id.ln);
-        lg = (Button) findViewById(R.id.lg);
-        log = (Button) findViewById(R.id.log);
-        exp = (Button) findViewById(R.id.exp);
-        abs = (Button) findViewById(R.id.abs);
-        factorial = (Button) findViewById(R.id.factorial);
-        power = (Button) findViewById(R.id.power);
-        sqrt = (Button) findViewById(R.id.sqrt);
-        cbrt = (Button) findViewById(R.id.cbrt);
-        root = (Button) findViewById(R.id.root);
-        e = (Button) findViewById(R.id.e);
-        pi = (Button) findViewById(R.id.pi);
-        openBr = (Button) findViewById(R.id.openBr);
-        closeBr = (Button) findViewById(R.id.closeBr);
-        clear = (Button) findViewById(R.id.clear);
-        backspace = (Button) findViewById(R.id.backspace);
+        Button zero = (Button) findViewById(R.id.digit0);
+        Button one = (Button) findViewById(R.id.digit1);
+        Button two = (Button) findViewById(R.id.digit2);
+        Button three = (Button) findViewById(R.id.digit3);
+        Button four = (Button) findViewById(R.id.digit4);
+        Button five = (Button) findViewById(R.id.digit5);
+        Button six = (Button) findViewById(R.id.digit6);
+        Button seven = (Button) findViewById(R.id.digit7);
+        Button eight = (Button) findViewById(R.id.digit8);
+        Button nine = (Button) findViewById(R.id.digit9);
+        Button dot = (Button) findViewById(R.id.dot);
+        Button plus = (Button) findViewById(R.id.plus);
+        Button minus = (Button) findViewById(R.id.minus);
+        Button multiple = (Button) findViewById(R.id.multiple);
+        Button divide = (Button) findViewById(R.id.divide);
+        Button mod = (Button) findViewById(R.id.mod);
+        Button sin = (Button) findViewById(R.id.sin);
+        Button cos = (Button) findViewById(R.id.cos);
+        Button tan = (Button) findViewById(R.id.tan);
+        Button cot = (Button) findViewById(R.id.cot);
+        Button ln = (Button) findViewById(R.id.ln);
+        Button lg = (Button) findViewById(R.id.lg);
+        Button log = (Button) findViewById(R.id.log);
+        Button exp = (Button) findViewById(R.id.exp);
+        Button abs = (Button) findViewById(R.id.abs);
+        Button factorial = (Button) findViewById(R.id.factorial);
+        Button power = (Button) findViewById(R.id.power);
+        Button sqrt = (Button) findViewById(R.id.sqrt);
+        Button cbrt = (Button) findViewById(R.id.cbrt);
+        Button root = (Button) findViewById(R.id.root);
+        Button e = (Button) findViewById(R.id.e);
+        Button pi = (Button) findViewById(R.id.pi);
+        Button openBr = (Button) findViewById(R.id.openBr);
+        Button closeBr = (Button) findViewById(R.id.closeBr);
+        Button clear = (Button) findViewById(R.id.clear);
+        Button backspace = (Button) findViewById(R.id.backspace);
 
         zero.setOnClickListener(this);
         one.setOnClickListener(this);
@@ -245,5 +258,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         closeBr.setOnClickListener(this);
         clear.setOnClickListener(this);
         backspace.setOnClickListener(this);
+    }
+
+    private void saveExpression() {
+        sharedPrefs = getSharedPreferences("CalcMain", MODE_PRIVATE);
+        Editor editor = sharedPrefs.edit();
+        editor.putString(EXPRESSION, expressionBuilder.toString()).apply();
+        //Toast.makeText(this, "Text saved", Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadExpression() {
+        sharedPrefs = getSharedPreferences("CalcMain", MODE_PRIVATE);
+        expressionBuilder = new StringBuilder().append(sharedPrefs.getString(EXPRESSION, ""));
+        //Toast.makeText(this, "Text loaded", Toast.LENGTH_SHORT).show();
     }
 }
