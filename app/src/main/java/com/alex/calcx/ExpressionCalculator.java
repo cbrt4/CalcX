@@ -4,30 +4,24 @@ import java.util.*;
 
 public class ExpressionCalculator {
 
-    private final List<String> functions;
-
-    private final List<String> operators;
-
-    private final List<String> brackets;
-
-    private final HashMap<String, Double> constants;
-
+    private final List<String> FUNCTIONS, OPERATORS, BRACKETS;
+    private final HashMap<String, Double> CONSTANTS;
+    private final String UNARY = "un";
     private Stack<String> stack, out;
 
     public ExpressionCalculator() {
+        FUNCTIONS = new ArrayList<>();
+        Collections.addAll(FUNCTIONS, "sin", "cos", "tan", "cot", "!", "^", "%", "ln", "lg", "abs", "sqrt", "cbrt");
 
-        functions = new ArrayList<>();
-        Collections.addAll(functions, "sin", "cos", "tan", "cot", "!", "^", "%", "log", "ln", "lg", "exp", "abs", "sqrt", "cbrt", "root");
+        OPERATORS = new ArrayList<>();
+        Collections.addAll(OPERATORS, "-", "+", "/", "*", UNARY);
 
-        operators = new ArrayList<>();
-        Collections.addAll(operators, "-", "+", "/", "*");
+        BRACKETS = new ArrayList<>();
+        Collections.addAll(BRACKETS, "(", ")");
 
-        brackets = new ArrayList<>();
-        Collections.addAll(brackets, "(", ")");
-
-        constants = new HashMap<>();
-        constants.put("pi", Math.PI);
-        constants.put("e", Math.E);
+        CONSTANTS = new HashMap<>();
+        CONSTANTS.put("pi", Math.PI);
+        CONSTANTS.put("e", Math.E);
     }
 
     private List<String> getTokens(String expression) {
@@ -35,28 +29,41 @@ public class ExpressionCalculator {
         expression = expression
                 .toLowerCase()
                 .replace(",", ".")
-                .replaceAll("['`]|[ ]+", "")
-                .replace("(-", "(0-")
-                .replace("(+", "(0+");
+                .replaceAll("['`]", "");
 
-        if (expression.startsWith("-") || expression.startsWith("+"))
-            expression = "0" + expression;
-
-        for (String function : functions) {
+        for (String function : FUNCTIONS) {
             expression = expression.replace(function, " " + function + " ");
         }
 
-        for (String operator : operators) {
+        for (String operator : OPERATORS) {
             expression = expression.replace(operator, " " + operator + " ");
         }
 
-        for (String bracket : brackets) {
+        for (String bracket : BRACKETS) {
             expression = expression.replace(bracket, " " + bracket + " ");
         }
 
-        List<String> tokens = new ArrayList<>();
-        Collections.addAll(tokens, expression.trim().split("[ ]+"));
+        for (Map.Entry<String, Double> entry : CONSTANTS.entrySet()) {
+            expression = expression.replace(entry.getKey(), " " + entry.getValue() + " ");
+        }
 
+        List<String> tokens = new ArrayList<>();
+        String previous = "";
+
+        for (String token : expression.split("[ ]+")) {
+            if ((isNumber(previous) || isCloseBracket(previous) || previous.matches("[!]")) &&
+                    (isOpenBracket(token) || isNumber(token) || isFunction(token) && !token.matches("[!%^]"))) {
+                tokens.add("*");
+                tokens.add(token);
+            } else if (token.equals("-") && !isNumber(previous) && !isCloseBracket(previous) && !previous.matches("[!]")) {
+                tokens.add("-1");
+                tokens.add(UNARY);
+            } else if (token.equals("+") && !isNumber(previous) && !isCloseBracket(previous) && !previous.matches("[!]")) {
+                tokens.add("1");
+                tokens.add(UNARY);
+            } else tokens.add(token);
+            previous = token;
+        }
         return tokens;
     }
 
@@ -96,7 +103,6 @@ public class ExpressionCalculator {
     private void toRPN(String expression) {
 
         for (String token : getTokens(expression)) {
-            if (isConstant(token)) token = String.valueOf(constants.get(token));
             if (isNumber(token)) out.push(token);
             if (isFunction(token)) stack.push(token);
             if (isOpenBracket(token)) stack.push(token);
@@ -141,13 +147,46 @@ public class ExpressionCalculator {
 
         for (String token : out) {
             if (isNumber(token)) stack.push(token);
-            if (isOperator(token)) calculateAction(token);
+            if (isOperator(token)) calculateOperation(token);
             if (isFunction(token)) calculateFunction(token);
         }
-        return stack.size() == 1 ? Double.parseDouble(stack.pop()) : .0 / .0;
+        return stack.size() == 1 && isNumber(stack.peek()) ?
+                Double.parseDouble(stack.pop()) : .0 / .0;
     }
 
-    private void calculateAction(String token) {
+    /**
+     * Оптимизация выражений
+     * Если вы пишете интерпретатор, то выходная строка, полученная после
+     * преобразования исходного выражения в обратную польскую нотацию, может
+     * храниться вместо исходного выражения для последующей интерпретации.
+     * Обратная польская нотация также позволяет компьютеру упрощать выражения.
+     * Пример алгоритма упрощения выражения
+     * Рассмотрим алгоритм, который осуществляет предвычисление констант в выражении.
+     * Дано выражение в ОПН. Нам понадобится стек для хранения смешанных данных (чисел и операторов).
+     * Алгоритм подобен тому, который применяется для вычисления выражений.
+     * Мы просматриваем выражение слева направо.
+     * <p>
+     * Пока есть символы для чтения:
+     * <p>
+     * Читаем очередной символ.
+     * <p>
+     * Если символ является числом, помещаем его в стек.
+     * <p>
+     * Если символ является переменной, считая что переменная имеет значение null, помещаем символ в стек.
+     * <p>
+     * Если символ является оператором:
+     * 1) (если все аргументы оператора, лежащие в стеке, имеют значение, отличное от null)
+     * выталкиваем аргументы оператора из стека и помещаем в стек результат операции;
+     * 2) (если хотя бы один из аргументов имеет значение null)
+     * считая что результат операции null, кладём символ оператора в стек.
+     * <p>
+     * После того, как всё выражение просмотрено, то, что осталось в стеке, является оптимизированым
+     * выражением (операторы выражения лежат в стеке в обратном порядке).
+     */
+    private void optimize() {
+    }
+
+    private void calculateOperation(String token) {
         try {
             double arg2 = Double.parseDouble(stack.pop()),
                     arg1 = Double.parseDouble(stack.pop());
@@ -162,6 +201,9 @@ public class ExpressionCalculator {
                     stack.push(String.valueOf(arg1 / arg2));
                     break;
                 case "*":
+                    stack.push(String.valueOf(arg1 * arg2));
+                    break;
+                case UNARY:
                     stack.push(String.valueOf(arg1 * arg2));
                     break;
             }
@@ -197,18 +239,11 @@ public class ExpressionCalculator {
                     arg1 = Double.parseDouble(stack.pop());
                     stack.push(String.valueOf(arg1 % arg2));
                     break;
-                case "log":
-                    arg1 = Double.parseDouble(stack.pop());
-                    stack.push(String.valueOf(Math.log(arg2) / Math.log(arg1)));
-                    break;
                 case "ln":
                     stack.push(String.valueOf(Math.log(arg2)));
                     break;
                 case "lg":
                     stack.push(String.valueOf(Math.log10(arg2)));
-                    break;
-                case "exp":
-                    stack.push(String.valueOf(Math.exp(arg2)));
                     break;
                 case "abs":
                     stack.push(String.valueOf(Math.abs(arg2)));
@@ -219,10 +254,6 @@ public class ExpressionCalculator {
                 case "cbrt":
                     stack.push(String.valueOf(Math.cbrt(arg2)));
                     break;
-                case "root":
-                    arg1 = Double.parseDouble(stack.pop());
-                    stack.push(String.valueOf(Math.pow(arg2, 1 / arg1)));
-                    break;
             }
         } catch (EmptyStackException e) {
             stack.push(String.valueOf(.0 / .0));
@@ -230,14 +261,10 @@ public class ExpressionCalculator {
     }
 
     private double factorial(double arg) {
-        if (arg % 1 != 0) return .0 / .0;
+        if ((arg % 1 != 0) || arg < 0) return .0 / .0;
         double result = 1;
         for (int i = (int) arg; i > 1; i--) result *= i;
         return result;
-    }
-
-    private boolean isConstant(String token) {
-        return constants.containsKey(token);
     }
 
     private boolean isNumber(String token) {
@@ -250,7 +277,7 @@ public class ExpressionCalculator {
     }
 
     private boolean isFunction(String token) {
-        return functions.contains(token);
+        return FUNCTIONS.contains(token);
     }
 
     private boolean isOpenBracket(String token) {
@@ -262,7 +289,7 @@ public class ExpressionCalculator {
     }
 
     private boolean isOperator(String token) {
-        return operators.contains(token);
+        return OPERATORS.contains(token);
     }
 
     private byte operationPriority(String token) {
@@ -270,6 +297,7 @@ public class ExpressionCalculator {
         if (token.matches("[-+]")) priority = 0;
         if (token.matches("[*/]")) priority = 1;
         if (isFunction(token)) priority = 2;
+        if (token.equals(UNARY)) priority = 3;
         return priority;
     }
 }

@@ -1,363 +1,509 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/expression"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+    <ScrollView
+        android:id="@+id/answer_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="30sp" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/ln"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="ln"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="30sp" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline12"
+        app:layout_constraintRight_toLeftOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
-    <TextView
-        android:id="@+id/answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+    <Button
+        android:id="@+id/sin"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="sin"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="30sp" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/openBr"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="("
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline11"
+        app:layout_constraintRight_toLeftOf="@+id/guideline13"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/closeBr"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text=")"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline13"
+        app:layout_constraintRight_toLeftOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/digit1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="1"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline5"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/digit2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="2"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/digit3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintRight_toLeftOf="@+id/guideline10"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/plus"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="+"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline10"
+        app:layout_constraintRight_toLeftOf="@+id/guideline11"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+    <Button
+        android:id="@+id/cos"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="cos"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+    <Button
+        android:id="@+id/pi"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="π"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline16"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/e"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="e"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline16"
+        app:layout_constraintRight_toLeftOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/digit4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="4"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline5"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/digit5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="5"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/digit6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="6"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintRight_toLeftOf="@+id/guideline10"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/minus"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="-"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline10"
+        app:layout_constraintRight_toLeftOf="@+id/guideline11"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+
+    <Button
+        android:id="@+id/sqrt"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="√"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline12"
+        app:layout_constraintRight_toLeftOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+    <Button
+        android:id="@+id/tan"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="tan"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <Button
+        android:id="@+id/factorial"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="!"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline12"
+        app:layout_constraintRight_toLeftOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <Button
+        android:id="@+id/power"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="xⁿ"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline12"
+        app:layout_constraintRight_toLeftOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/digit7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="7"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline5"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+    <Button
+        android:id="@+id/digit8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="8"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+    <Button
+        android:id="@+id/digit9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="9"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintRight_toLeftOf="@+id/guideline10"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+    <Button
+        android:id="@+id/multiple"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="*"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline10"
+        app:layout_constraintRight_toLeftOf="@+id/guideline11"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/abs"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="|x|"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline14"
+        app:layout_constraintRight_toLeftOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/backspace"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="C"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline11"
+        app:layout_constraintRight_toLeftOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <Button
+        android:id="@+id/digit0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline5"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <Button
+        android:id="@+id/dot"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="."
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <Button
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text=" "
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintRight_toLeftOf="@+id/guideline10"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <Button
+        android:id="@+id/divide"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="/"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline10"
+        app:layout_constraintRight_toLeftOf="@+id/guideline11"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
 
-            <Button
-                android:id="@+id/plus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
 
-            <Button
-                android:id="@+id/sin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="sin"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
 
-            <Button
-                android:id="@+id/cos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="cos"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
 
-            <Button
-                android:id="@+id/digit1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-            <Button
-                android:id="@+id/digit2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
 
-            <Button
-                android:id="@+id/digit3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
 
-            <Button
-                android:id="@+id/minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="-"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
-            <Button
-                android:id="@+id/tan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="tan"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1" />
 
-            <Button
-                android:id="@+id/cot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="cot"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
 
-            <Button
-                android:id="@+id/digit4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="4"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.775" />
 
-            <Button
-                android:id="@+id/digit5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
 
-            <Button
-                android:id="@+id/digit6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="6"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.925" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/multiple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="*"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/ln"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ln"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/lg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="lg"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/digit7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="7"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/digit8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="8"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/digit9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="9"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/divide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="/"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/exp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="e^x"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/log"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="log"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/abs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="|x|"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/digit0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="0"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/dot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="."
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/mod"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="%"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/factorial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="!"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/power"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="^"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/sqrt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="sqrt"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/cbrt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="cbrt"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/root"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="root"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/pi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="pi"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/e"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="e"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/openBr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="("
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/closeBr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=")"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/backspace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="C"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                android:id="@+id/clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="CLR"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>
-
-        <!--<TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/solve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="="
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-        </TableRow>-->
-    </TableLayout>
-</LinearLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+</android.support.constraint.ConstraintLayout>

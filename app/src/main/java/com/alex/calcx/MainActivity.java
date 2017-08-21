@@ -5,17 +5,17 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends AppCompatActivity implements OnClickListener, OnLongClickListener {
 
     private final static String EXPRESSION = "expression";
     private ExpressionCalculator calculator;
     private StringBuilder expressionBuilder;
     private SharedPreferences sharedPrefs;
-    private TextView expression;
     private TextView answer;
 
     @Override
@@ -30,9 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void onStart() {
         super.onStart();
         loadExpression();
-        expression.setText(expressionBuilder);
-        answer.setText(expression.getText().length() > 0 ?
-                " = " + calculator.calculate(expression.getText().toString()) : "");
+        answer.setText(getAnswer());
     }
 
     @Override
@@ -55,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         super.onRestoreInstanceState(savedInstanceState);
         // Restore state members from saved instance
         expressionBuilder = new StringBuilder().append(savedInstanceState.getString(EXPRESSION));
-        expression.setText(expressionBuilder);
-        answer.setText(expression.getText().length() > 0 ?
-                " = " + calculator.calculate(expression.getText().toString()) : "");
+        answer.setText(getAnswer());
     }
 
     @Override
@@ -109,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.divide:
                 expressionBuilder.append("/");
                 break;
-            case R.id.mod:
-                expressionBuilder.append("%");
+            case R.id.space:
+                expressionBuilder.append(" ");
                 break;
             case R.id.sin:
                 expressionBuilder.append("sin");
@@ -121,20 +117,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.tan:
                 expressionBuilder.append("tan");
                 break;
-            case R.id.cot:
-                expressionBuilder.append("cot");
-                break;
             case R.id.ln:
                 expressionBuilder.append("ln");
-                break;
-            case R.id.lg:
-                expressionBuilder.append("lg");
-                break;
-            case R.id.log:
-                expressionBuilder.append("log");
-                break;
-            case R.id.exp:
-                expressionBuilder.append("exp");
                 break;
             case R.id.abs:
                 expressionBuilder.append("abs");
@@ -148,12 +132,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.sqrt:
                 expressionBuilder.append("sqrt");
                 break;
-            case R.id.cbrt:
-                expressionBuilder.append("cbrt");
-                break;
-            case R.id.root:
-                expressionBuilder.append("root");
-                break;
             case R.id.e:
                 expressionBuilder.append("e");
                 break;
@@ -166,23 +144,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.closeBr:
                 expressionBuilder.append(")");
                 break;
-            case R.id.clear:
-                expressionBuilder = new StringBuilder().append("");
-                break;
             case R.id.backspace:
                 if (expressionBuilder.length() > 0)
                     expressionBuilder.deleteCharAt(expressionBuilder.length() - 1);
                 break;
         }
-        expression.setText(expressionBuilder);
-        answer.setText(expression.getText().length() > 0 ?
-                " = " + calculator.calculate(expression.getText().toString()) : "");
+        answer.setText(getAnswer());
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.divide:
+                expressionBuilder.append("%");
+                break;
+            case R.id.ln:
+                expressionBuilder.append("lg");
+                break;
+            case R.id.sqrt:
+                expressionBuilder.append("cbrt");
+                break;
+            case R.id.backspace:
+                expressionBuilder = new StringBuilder("");
+                break;
+        }
+        answer.setText(getAnswer());
+        return true;
     }
 
     private void init() {
         calculator = new ExpressionCalculator();
-        expressionBuilder = new StringBuilder().append("");
-        expression = (TextView) findViewById(R.id.expression);
+        expressionBuilder = new StringBuilder("");
         answer = (TextView) findViewById(R.id.answer);
 
         Button zero = (Button) findViewById(R.id.digit0);
@@ -200,26 +193,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         Button minus = (Button) findViewById(R.id.minus);
         Button multiple = (Button) findViewById(R.id.multiple);
         Button divide = (Button) findViewById(R.id.divide);
-        Button mod = (Button) findViewById(R.id.mod);
+        Button space = (Button) findViewById(R.id.space);
         Button sin = (Button) findViewById(R.id.sin);
         Button cos = (Button) findViewById(R.id.cos);
         Button tan = (Button) findViewById(R.id.tan);
-        Button cot = (Button) findViewById(R.id.cot);
         Button ln = (Button) findViewById(R.id.ln);
-        Button lg = (Button) findViewById(R.id.lg);
-        Button log = (Button) findViewById(R.id.log);
-        Button exp = (Button) findViewById(R.id.exp);
         Button abs = (Button) findViewById(R.id.abs);
         Button factorial = (Button) findViewById(R.id.factorial);
         Button power = (Button) findViewById(R.id.power);
         Button sqrt = (Button) findViewById(R.id.sqrt);
-        Button cbrt = (Button) findViewById(R.id.cbrt);
-        Button root = (Button) findViewById(R.id.root);
         Button e = (Button) findViewById(R.id.e);
         Button pi = (Button) findViewById(R.id.pi);
         Button openBr = (Button) findViewById(R.id.openBr);
         Button closeBr = (Button) findViewById(R.id.closeBr);
-        Button clear = (Button) findViewById(R.id.clear);
         Button backspace = (Button) findViewById(R.id.backspace);
 
         zero.setOnClickListener(this);
@@ -237,27 +223,29 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         minus.setOnClickListener(this);
         multiple.setOnClickListener(this);
         divide.setOnClickListener(this);
-        mod.setOnClickListener(this);
+        divide.setOnLongClickListener(this);
+        space.setOnClickListener(this);
         sin.setOnClickListener(this);
         cos.setOnClickListener(this);
         tan.setOnClickListener(this);
-        cot.setOnClickListener(this);
         ln.setOnClickListener(this);
-        lg.setOnClickListener(this);
-        log.setOnClickListener(this);
-        exp.setOnClickListener(this);
+        ln.setOnLongClickListener(this);
         abs.setOnClickListener(this);
         factorial.setOnClickListener(this);
         power.setOnClickListener(this);
         sqrt.setOnClickListener(this);
-        cbrt.setOnClickListener(this);
-        root.setOnClickListener(this);
+        sqrt.setOnLongClickListener(this);
         e.setOnClickListener(this);
         pi.setOnClickListener(this);
         openBr.setOnClickListener(this);
         closeBr.setOnClickListener(this);
-        clear.setOnClickListener(this);
         backspace.setOnClickListener(this);
+        backspace.setOnLongClickListener(this);
+    }
+
+    private String getAnswer() {
+        return expressionBuilder.length() > 0 ?
+                String.valueOf(expressionBuilder) + "\n = " + calculator.calculate(expressionBuilder.toString()) : "";
     }
 
     private void saveExpression() {
